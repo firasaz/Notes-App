@@ -1,10 +1,8 @@
-import { Text, View, ScrollView, TextInput, Button, Image } from "react-native";
-import { Link, useNavigation } from "expo-router";
+import { Text, View, ScrollView, TextInput, Image } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
 
 export default function Index() {
-  const navigation = useNavigation()
 
   const notesList = [
     {
@@ -54,13 +52,6 @@ export default function Index() {
           marginBottom: 10,
         }}
       >
-        {/* <Image
-          style={{
-            position: 'absolute',
-            width: 20
-          }}
-          source={require('@/assets/images/search.png')}
-        /> */}
         <TextInput
           placeholder="Search notes..."
           style={{
@@ -96,11 +87,6 @@ export default function Index() {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            // marginLeft: 10,
-            // marginRight: 10,
-            // paddingLeft: 10,
-            // paddingRight: 10,
-            // borderWidth: 1,
             borderColor: '#E0E0E0',
             borderRadius: 3
           }}
@@ -127,30 +113,6 @@ export default function Index() {
               </Text>
               // <View style={{flex: 1, maxHeight: 1, backgroundColor: '#828282', marginBottom: 8}} />
             ))}
-            {/* <Text style={{
-              fontWeight: '500'
-            }}
-            >
-              Write blog post for demo day
-            </Text>
-            <Text style={{
-              fontWeight: '500'
-            }}
-            >
-              Write blog post for demo day
-            </Text>
-            <Text style={{
-              fontWeight: '500'
-            }}
-            >
-              Write blog post for demo day
-            </Text>
-            <Text style={{
-              fontWeight: '500'
-            }}
-            >
-              Write blog post for demo day
-            </Text> */}
           </View>
 
           {/* Column 2 */}
@@ -182,43 +144,6 @@ export default function Index() {
                 </Text>
               )
             })}
-            {/* <Text style={{
-              borderWidth: 1,
-              borderRadius: 4,
-              borderColor: '#E0E0E0',
-              backgroundColor: '#F7F7F7',
-              marginTop: 4,
-              padding: 3,
-              fontSize: 12
-            }}>Jun 15</Text>
-
-            <Text style={{
-              borderWidth: 1,
-              borderRadius: 4,
-              borderColor: '#E0E0E0',
-              backgroundColor: '#F7F7F7',
-              marginTop: 4,
-              padding: 3,
-              fontSize: 12
-            }}>Jun 15</Text>
-            <Text style={{
-              borderWidth: 1,
-              borderRadius: 4,
-              borderColor: '#E0E0E0',
-              backgroundColor: '#F7F7F7',
-              marginTop: 4,
-              padding: 3,
-              fontSize: 12
-            }}>Jun 15</Text> */}
-            {/* <Text style={{
-              borderWidth: 1,
-              borderRadius: 4,
-              borderColor: '#E0E0E0',
-              backgroundColor: '#F7F7F7',
-              marginTop: 4,
-              padding: 3,
-              fontSize: 12
-            }}>Jun 15</Text> */}
           </View>
 
           {/* Column 3 */}
