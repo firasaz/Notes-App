@@ -10,7 +10,7 @@ export default function RootLayout() {
         headerTitleStyle: {
           fontWeight: "500",
         },
-        headerShadowVisible: false,
+        headerShadowVisible: true,
         // headerShown: false
       }}
     />

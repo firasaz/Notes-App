@@ -1,7 +1,9 @@
-import { Text, View, ScrollView, TextInput, Image, TouchableHighlight } from "react-native";
+import { Text, View, ScrollView, TextInput, Image, TouchableHighlight, TouchableOpacity } from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
-import { Link } from "expo-router";
+import { faFilter } from '@fortawesome/free-solid-svg-icons/faFilter'
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons/faEllipsis'
+import { Link, useRouter } from "expo-router";
 import { useState } from "react";
 
 export default function Index() {
@@ -28,9 +30,10 @@ export default function Index() {
     },
   ]
   const [notes, setNotes] = useState(notesList)
-  const handleSearchChange = (e) => {
-    let filteredNotes = notes.filter(note => note.title.includes(e))
-    filteredNotes.length > 0 ? setNotes(filteredNotes) : setNotes(notesList)
+  const router = useRouter()
+  const handleSearchChange = (userInput) => {
+    let filteredNotes = notesList.filter(note => note.title.includes(userInput)===true)
+    setNotes(filteredNotes)
   }
   return (
     <ScrollView
@@ -47,18 +50,7 @@ export default function Index() {
       }}
     >
       {/* Page Header */}
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          borderBlockColor: '#000000',
-          borderStyle: 'solid',
-          padding: 0,
-          marginBottom: 10,
-        }}
-      >
+      <View className='my-4 flex flex-row justify-between items-center'>
         <TextInput
           placeholder="Search notes..."
           style={{
@@ -73,80 +65,42 @@ export default function Index() {
           }}
           onChangeText={handleSearchChange}
         />
-        <View
-          style={{ borderRadius: 4, padding: 8, backgroundColor: '#F4F4F4' }}
-        >
-          <Image
-            source={require('@/assets/images/filter/Icon/filter.png')}
-            style={{
-              width: 20,
-              height: 20,
-            }}
-          />
+        <View style={{ borderRadius: 4, padding: 8, backgroundColor: '#F4F4F4' }}>
+          <FontAwesomeIcon icon={faFilter} className='text-white' />
         </View>
       </View>
 
       {/* Notes List Table */}
-      <View className='flex flex-col gap-3'>
-
-        {/* <View style={{ display: 'flex', flexDirection: 'row' }}>
-          <Text style={{ color: '#828282', marginBottom: 8 }}>
-            Title
-          </Text>
-          <Text style={{ color: '#828282', marginBottom: 8 }}>
-            Date
-          </Text>
-          <Text style={{ color: '#828282', marginBottom: 8 }}>
-            Options
-          </Text>
-        </View> */}
-        {(notes && notes.length > 0) ? notes.map(note => (
-          <View
-            key={note.id}
-            className='flex flex-row justify-between'
-          >
-            <Text style={{ fontWeight: '500' }}>
-              {note.title}
-            </Text>
-            <Text className='border rounded border-lightGray-md bg-lightGray-sm p-1 text-xs'
-            // style={{
-            //   borderWidth: 1,
-            //   borderRadius: 4,
-            //   borderColor: '#E0E0E0',
-            //   backgroundColor: '#F7F7F7',
-            //   // marginTop: 4,
-            //   padding: 3,
-            //   fontSize: 12 }}
+      <View className='flex flex-col flex-1 gap-3'>
+        {(notes && notes.length > 0) ? 
+          notes.map(note => (
+            <TouchableOpacity
+              onPress={() => router.push(`/notes/${note.id}`)}
+              key={note.id}
+              className='flex flex-row justify-between'
             >
-              {note.date}
-            </Text>
-            {/* <TouchableHighlight>
-              <View>
-                <Text>test</Text>
-              </View>
-            </TouchableHighlight> */}
-            <Image source={require('@/assets/images/options.png')} />
-          </View>
-        )) : <Text>No notes were found...</Text>}
+              <Text style={{ fontWeight: '500' }}>
+                {note.title}
+              </Text>
+              <Text className='border rounded border-lightGray-md bg-lightGray-sm p-1 text-xs'>
+                {note.date}
+              </Text>
+              <FontAwesomeIcon icon={faEllipsis} />
+            </TouchableOpacity>
+          )) : <Text>No notes were found...</Text>
+        }
       </View>
-      <TouchableHighlight className="border border-gray-400 rounded p-3 bg-blue-300 mt-5" underlayColor='#000'>
-        <View>
-          <Link href={'example-docs'} className="text-center">go to docs</Link>
-        </View>
-      </TouchableHighlight>
 
       {/* Page Footer */}
-      <View
-        style={{
-          alignItems: 'flex-end',
-          alignSelf: 'flex-end',
-          marginTop: 'auto',
-          padding: 10,
-          backgroundColor: '#F4F4F4',
-          borderRadius: 100,
-        }}
-      >
-        <FontAwesomeIcon icon={faPlus} />
+      <View className='flex flex-row justify-between items-center'>
+        <TouchableHighlight className="border border-gray-400 rounded p-2 bg-blue-300" underlayColor='#000'>
+          <View>
+            <Link href={'example-docs'} className="text-center">go to docs</Link>
+          </View>
+        </TouchableHighlight>
+        <View className='p-2 rounded-full bg-lightGray-md'>
+          <FontAwesomeIcon icon={faPlus} />
+        </View>
       </View>
     </ScrollView>
   );
