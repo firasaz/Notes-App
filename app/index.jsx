@@ -39,14 +39,10 @@ export default function Index() {
   return (
     <SafeAreaView>
       <ScrollView
-        style={{
-          backgroundColor: '#fff',
-          paddingLeft: 14,
-          paddingRight: 14,
-        }}
         contentContainerStyle={{
           display: 'flex',
           height: '100%',
+          margin: 15,
           paddingBottom: 30,
           paddingRight: 10
         }}
