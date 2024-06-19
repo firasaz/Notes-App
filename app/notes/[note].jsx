@@ -18,10 +18,7 @@ function note({ id }) {
   return (
     // <TextInput multiline={true} className='border mx-3 h-auto' />
     <View className='h-full divide-y divide-dotted'>
-      {noteId.note==1 && notes.map(note => (
-        <TextInput key={note.id} className='p-2' defaultValue={note.text} />
-      ))}
-      <TextInput multiline={true} textAlignVertical="top" className='h-full mx-1 text-xl' />
+      <TextInput multiline={true} textAlignVertical="top" placeholder="Type your notes..." className='h-full mx-1 text-xl' defaultValue={input} onChange={(text)=>setInput({text})} />
     </View>
   )
 }
