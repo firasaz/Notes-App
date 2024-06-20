@@ -5,7 +5,9 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
 import { faFilter } from '@fortawesome/free-solid-svg-icons/faFilter'
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons/faEllipsis'
 import { Link, useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getDocs, collection } from "firebase/firestore";
+import { FIRESTORE_DB } from "@/FirebaseConfig"
 
 export default function Index() {
   const notesList = [
@@ -30,12 +32,27 @@ export default function Index() {
       date: '15/06/2024'
     },
   ]
-  const [notes, setNotes] = useState(notesList)
+  const [notes, setNotes] = useState([])
   const router = useRouter()
   const handleSearchChange = (userInput) => {
     let filteredNotes = notesList.filter(note => note.title.includes(userInput)===true)
     setNotes(filteredNotes)
   }
+  const fetchNotes = async () => {
+    const data = await getDocs(collection(FIRESTORE_DB, 'notes_list'))
+    if(data) {
+      const lst = []
+      data.forEach(doc => {
+        lst.push(doc?.data())
+      })
+      setNotes(lst)
+    } else {
+      console.log('something went wrong...')
+    }
+  }
+  useEffect(() => {
+    fetchNotes()
+  }, [])
   return (
     <SafeAreaView>
       <ScrollView
@@ -79,9 +96,11 @@ export default function Index() {
                 <Text style={{ fontWeight: '500' }}>
                   {note.title}
                 </Text>
-                <Text className='border rounded border-lightGray-md bg-lightGray-sm p-1 text-xs'>
-                  {note.date}
-                </Text>
+                {note.created_date && 
+                  <Text className='border rounded border-lightGray-md bg-lightGray-sm p-1 text-xs'>
+                    {note?.created_date?.toDate().toDateString()}
+                  </Text>
+                }
                 <FontAwesomeIcon icon={faEllipsis} />
               </TouchableOpacity>
             )) : <Text>No notes were found...</Text>
@@ -89,11 +108,9 @@ export default function Index() {
         </View>
         {/* Page Footer */}
         <View className='flex flex-row justify-between items-center'>
-          <TouchableHighlight className="border border-gray-400 rounded p-2 bg-blue-300" underlayColor='#000'>
-            <View>
-              <Link href={'example-docs'} className="text-center">go to docs</Link>
-            </View>
-          </TouchableHighlight>
+          <TouchableOpacity className="border border-gray-400 rounded p-2 bg-blue-300" underlayColor='#000'>
+            <Link href={'example-docs'} className="text-center">go to docs</Link>
+          </TouchableOpacity>
           <View className='p-2 rounded-full bg-lightGray-md'>
             <FontAwesomeIcon icon={faPlus} />
           </View>
