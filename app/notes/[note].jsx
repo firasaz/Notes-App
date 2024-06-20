@@ -51,7 +51,7 @@ function note() {
         <TextInput multiline={true} textAlignVertical="top" placeholder="Type your notes..." className='h-full text-xl' defaultValue={input} onChangeText={(text) => {setInput(text)}} />
         : <ActivityIndicator size={'large'} color='#808080' />
       }
-      {!loading ?? <TouchableOpacity onPress={handleSubmit} style={{ borderWidth: 1 }}>
+      {!loading && <TouchableOpacity onPress={handleSubmit} style={{ borderWidth: 1 }}>
         <Text>Save</Text>
       </TouchableOpacity>}
     </View>
